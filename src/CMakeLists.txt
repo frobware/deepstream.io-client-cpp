@@ -19,7 +19,7 @@ set_source_files_properties(
 )
 
 add_library(
-	libdeepstream SHARED
+	libdeepstream STATIC
 	client.cpp
 	deepstream.cpp
 	error_handler.cpp
@@ -37,18 +37,21 @@ add_library(
 	websockets/pseudo.cpp
 	"${CMAKE_CURRENT_BINARY_DIR}/lexer.c")
 
+set(POCO_LIBS PocoNet PocoNetSSL PocoCrypto PocoUtil PocoFoundation)
+
 set_target_properties(libdeepstream PROPERTIES OUTPUT_NAME deepstream)
 target_include_directories(libdeepstream PUBLIC "${CMAKE_BINARY_DIR}/include")
-target_link_libraries(libdeepstream PUBLIC PocoFoundation PocoNet)
-
+target_link_libraries(libdeepstream PUBLIC ${POCO_LIBS} crypto ssl pthread)
 install(TARGETS libdeepstream DESTINATION "lib")
-
 
 add_executable(ds-example ds-example.cpp)
 target_link_libraries(ds-example PUBLIC libdeepstream)
 
 add_executable(ds-client ds-client.cpp)
 target_link_libraries(ds-client PUBLIC libdeepstream)
+
+add_executable(frobware-client frobware-client.cpp)
+target_link_libraries(frobware-client PUBLIC libdeepstream)
 
 add_executable(fuzz-me fuzz-me.cpp)
 target_link_libraries(fuzz-me PUBLIC libdeepstream)
