@@ -9,7 +9,7 @@ if(NOT BUILD_COVERAGE)
 endif()
 
 if(NOT CMAKE_BUILD_TYPE)
-  set(CMAKE_BUILD_TYPE Release CACHE STRING
+  set(CMAKE_BUILD_TYPE Debug CACHE STRING
       "Choose the type of build, options are: None Debug Release RelWithDebInfo MinSizeRel."
       FORCE)
 endif()
@@ -109,6 +109,7 @@ externalproject_add(poco
   "-DENABLE_TESTS=ON"
   -DCMAKE_INSTALL_PREFIX=${CMAKE_BINARY_DIR}/thirdparty
   LOG_CONFIGURE ON
+  UPDATE_COMMAND ""
 )
 
 find_package(FLEX 2.5 REQUIRED)

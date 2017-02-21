@@ -54,6 +54,12 @@ target_link_libraries(ds-client PUBLIC libdeepstream)
 add_executable(frobware-client frobware-client.cpp)
 target_link_libraries(frobware-client PUBLIC libdeepstream)
 
+add_executable(https-client https-client.cpp)
+target_link_libraries(https-client PUBLIC libdeepstream)
+
+add_executable(echo-client echo-client.cpp)
+target_link_libraries(echo-client PUBLIC libdeepstream)
+
 add_executable(fuzz-me fuzz-me.cpp)
 target_link_libraries(fuzz-me PUBLIC libdeepstream)
 

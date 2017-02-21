@@ -18,8 +18,52 @@
 
 #include <deepstream.hpp>
 
+#include <Poco/Exception.h>
+#include <Poco/Net/AcceptCertificateHandler.h>
+#include <Poco/Net/ConsoleCertificateHandler.h>
+#include <Poco/Net/FTPStreamFactory.h>
+#include <Poco/Net/HTTPRequest.h>
+#include <Poco/Net/HTTPResponse.h>
+#include <Poco/Net/HTTPSClientSession.h>
+#include <Poco/Net/HTTPSStreamFactory.h>
+#include <Poco/Net/HTTPStreamFactory.h>
+#include <Poco/Net/KeyConsoleHandler.h>
+#include <Poco/Net/SSLManager.h>
+#include <Poco/Path.h>
+#include <Poco/SharedPtr.h>
+#include <Poco/StreamCopier.h>
+#include <Poco/URI.h>
+#include <Poco/URIStreamOpener.h>
+
+using Poco::Net::HTTPStreamFactory;
+using Poco::Net::HTTPSStreamFactory;
+
+using Poco::URIStreamOpener;
+using Poco::StreamCopier;
+using Poco::Path;
+using Poco::URI;
+using Poco::SharedPtr;
+using Poco::Exception;
+using Poco::Net::HTTPStreamFactory;
+using Poco::Net::HTTPSStreamFactory;
+using Poco::Net::FTPStreamFactory;
+using Poco::Net::SSLManager;
+using Poco::Net::Context;
+using Poco::Net::KeyConsoleHandler;
+using Poco::Net::PrivateKeyPassphraseHandler;
+using Poco::Net::InvalidCertificateHandler;
+using Poco::Net::ConsoleCertificateHandler;
+
 int main(int argc, char* argv[])
 {
+    HTTPStreamFactory::registerFactory();
+    HTTPSStreamFactory::registerFactory();
+
+    Poco::SharedPtr<Poco::Net::InvalidCertificateHandler> pAcceptCertHandler = new Poco::Net::AcceptCertificateHandler(true);
+    Poco::Net::Context::Ptr pContext = new Poco::Net::Context(Poco::Net::Context::CLIENT_USE, "", "", "", Poco::Net::Context::VERIFY_RELAXED, 9, true, "ALL:!ADH:!LOW:!EXP:!MD5:@STRENGTH");
+
+    SSLManager::instance().initializeClient(NULL, pAcceptCertHandler, pContext);
+    
     std::string uri = "ws://10.69.6.74:6020/deepstream";
 
     if (argc >= 2) {
@@ -31,6 +75,7 @@ int main(int argc, char* argv[])
 
         if (client.login()) {
             std::cout << "successfully logged in to " << uri << std::endl;
+	    sleep(120);
             return EXIT_SUCCESS;
         } else {
             std::cerr << "failed to login to " << uri << std::endl;

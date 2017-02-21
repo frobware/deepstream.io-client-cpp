@@ -37,11 +37,10 @@ namespace deepstream {
 namespace websockets {
     namespace poco {
 
-        Client::Client(const std::string& uri_string) try
-            : uri_(uri_string),
+        Client::Client(const std::string& uri) try
+            : uri_(uri),
               session_(uri_.getHost(), uri_.getPort()),
-              request_(net::HTTPRequest::HTTP_GET, uri_.getPath(),
-                  net::HTTPRequest::HTTP_1_1),
+              request_(net::HTTPRequest::HTTP_GET, uri_.getPath(), net::HTTPRequest::HTTP_1_1),
               websocket_(session_, request_, response_) {
         } catch (Poco::Exception& e) {
             throw Exception(e.displayText());

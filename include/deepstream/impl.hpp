@@ -58,8 +58,7 @@ namespace impl {
         Client(Client&&) = delete;
 
     protected:
-        explicit Client(std::unique_ptr<websockets::Client> p_websocket,
-            std::unique_ptr<ErrorHandler>);
+        explicit Client(std::unique_ptr<websockets::Client> p_websocket, std::unique_ptr<ErrorHandler>);
 
     public:
         bool login();
