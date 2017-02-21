@@ -75,7 +75,6 @@ int main(int argc, char* argv[])
 
         if (client.login()) {
             std::cout << "successfully logged in to " << uri << std::endl;
-	    sleep(120);
             return EXIT_SUCCESS;
         } else {
             std::cerr << "failed to login to " << uri << std::endl;
