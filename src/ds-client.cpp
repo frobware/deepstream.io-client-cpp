@@ -20,7 +20,7 @@
 
 int main(int argc, char* argv[])
 {
-    std::string uri = "ws://localhost:6020/deepstream";
+    std::string uri = "ws://10.69.6.74:6020/deepstream";
 
     if (argc >= 2) {
         uri = argv[1];

@@ -37,7 +37,8 @@ add_library(
 	websockets/pseudo.cpp
 	"${CMAKE_CURRENT_BINARY_DIR}/lexer.c")
 
-set(POCO_LIBS PocoNet PocoNetSSL PocoCrypto PocoUtil PocoFoundation)
+#set(POCO_LIBS PocoNet PocoNetSSL PocoCrypto PocoUtil PocoFoundation)
+set(POCO_LIBS PocoNetSSL PocoCrypto PocoNet PocoUtil PocoJSON PocoXML PocoFoundation)
 
 set_target_properties(libdeepstream PROPERTIES OUTPUT_NAME deepstream)
 target_include_directories(libdeepstream PUBLIC "${CMAKE_BINARY_DIR}/include")
